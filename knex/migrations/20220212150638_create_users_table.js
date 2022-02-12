@@ -12,6 +12,7 @@ exports.up = function(knex) {
         table.string('password', 50).notNullable()
         table.text('desc').nullable()
         table.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now())
+        table.string('userhandle', 40).notNullable().unique()
     })
 };
 

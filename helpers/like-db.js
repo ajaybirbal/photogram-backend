@@ -2,7 +2,7 @@
  * Functions to handle likes DB.
  */
 
-const { knex, LIKES_DB_NAME } = require("../db");
+const { knex, LIKES_DB_NAME, USERS_DB_NAME } = require("../db");
 
 /**
  * Likes a particular post.
@@ -61,3 +61,17 @@ module.exports.getPostLikesCount = async postID => {
                     .groupBy('post_id')
                     .having('post_id', '=', postID);
 } 
+
+/**
+ * Gets a list of post likers.
+ */
+module.exports.getPostLikers = async (postID, limit = 12, offset = 0) => {
+    return await knex(LIKES_DB_NAME)
+                            .join(USERS_DB_NAME, 'user_id', '=', `${USERS_DB_NAME}.id`)
+                            .where('post_id', '=', postID)
+                            .select('userhandle')
+                            .distinct()
+                            .limit(limit)
+                            .offset(offset)
+
+}

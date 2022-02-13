@@ -38,23 +38,34 @@ module.exports.createNewPost = async (url, body, user_id) => {
  */
 module.exports.getSinglePost = async postID => {
     return await knex.select('id', 'url', 'body', 'created_at', 'user_id')
-                                .from(POSTS_DB_NAME)
-                                .where('id', postID)
+        .from(POSTS_DB_NAME)
+        .where('id', postID)
 }
 
 /**
- * Returns posts by a particular user. Ability to offset and limit number of posts.
+ * Returns posts by a particular user. Ability to offset and limit number of posts. 
+ * Also returns total posts by the user.
  * @param {*} userId 
  * @param {*} limit 
  * @param {*} offset 
  */
 module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
-    return await knex.select('id', 'url', 'body', 'created_at', 'user_id')
-                        .from(POSTS_DB_NAME)
-                        .where('user_id', userId)
-                        .limit(limit)
-                        .offset(offset)
-                        .orderBy('created_at', 'desc');
+
+    const getTotalPostsCountQuery = knex(POSTS_DB_NAME).select().count('*').where('user_id', '=', 25).as('total_post_count');
+
+    const result = await knex.select('id', 'url', 'body', 'created_at', 'user_id', getTotalPostsCountQuery)
+        .from(POSTS_DB_NAME)
+        .where('user_id', userId)
+        .limit(limit)
+        .offset(offset)
+        .orderBy('created_at', 'desc');
+    
+    const postCount = result[0].total_post_count;
+
+    return {
+        posts: result,
+        postCount
+    }
 }
 
 /**
@@ -65,11 +76,11 @@ module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
 module.exports.deletePost = async postID => {
     let result = null, errResult = null;
 
-    try{
+    try {
         result = await knex(POSTS_DB_NAME)
-                    .where('id', Number(postID))
-                    .del();
-    } catch(error){
+            .where('id', Number(postID))
+            .del();
+    } catch (error) {
         errResult = error;
     }
 
@@ -84,8 +95,9 @@ module.exports.deletePost = async postID => {
  * @param {*} userId 
  */
 module.exports.getUserPostCount = async userId => {
+
     return await knex(POSTS_DB_NAME)
-                    .count()
-                    .groupBy('user_id')
-                    .having('user_id', '=',  userId);
+        .count()
+        .groupBy('user_id')
+        .having('user_id', '=', userId);
 }

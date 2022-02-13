@@ -15,7 +15,8 @@
  */
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { likePost, getPostLikesCount, dislikePost } = require('../helpers/like-db');
+const { route } = require('express/lib/router');
+const { likePost, getPostLikesCount, dislikePost, getPostLikers } = require('../helpers/like-db');
 const { createNewPost, getSinglePost, getUserPosts, deletePost } = require('../helpers/posts-db');
 const router = express.Router();
 
@@ -62,7 +63,7 @@ router.get('/:id', async (req, res) => {
 
     return res.json({
         postData: result,
-        likes: numberOfLikes[0].count
+        likes: numberOfLikes[0]?.count || 0
     }).status(200);
 })
 
@@ -159,6 +160,20 @@ router.delete('/:id/dislike', async (req, res) => {
     if (error) {
         return res.json(setDeletedStatus(false)).status(200)
     }
+})
+
+
+/**
+ * Returns the list of the likers of the post
+ */
+router.get('/:id/likers', async(req, res) => {
+    const postID = req.params.id;
+    const limit = req.query.limit || 9;
+    const offset = req.query.offset || 0;
+
+    const result = await getPostLikers(postID, limit, offset);
+    
+    return res.json(result).status(200);
 })
 
 module.exports = router;

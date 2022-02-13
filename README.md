@@ -50,6 +50,11 @@ Requires following body content to be passed in JSON format: -
     likerID: 'ID of the liker'
 }`
 
+### `/post/:id/likers?limit=10&offset=0`
+GET - Returns an array of likers user handles.
+Limit - Number of likers to be shown, Default - 12
+Offset - Offset the number of likers from the begining. Default - 0
+
 ### `/post/:id/dislike`
 DELETE - Removes the like from the particular post
 Requires following body content to be passed in JSON format: -
@@ -59,7 +64,7 @@ Requires following body content to be passed in JSON format: -
 
 ### `/post/user/34?limit=10&offset=0`
 GET - Returns the collection of the posts to be shown on profile page. 
-Limit - Number of posts to be shown
-Offset - Offset the number of posts from the begining
+Limit - Number of posts to be shown, Default - 9
+Offset - Offset the number of posts from the begining. Default - 0
 
 This function is primarily used in displaying images on the profile page.

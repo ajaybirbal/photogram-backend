@@ -12,7 +12,6 @@
  */
 
 const express = require('express');
-const { body, validationResult } = require('express-validator');
 const { getUserPosts, getUserPostCount } = require('../helpers/posts-db');
 const { getUserInfo, deleteUser } = require('../helpers/users-db');
 const router = express.Router();
@@ -32,15 +31,13 @@ router.get('/:id', async (req, res) => {
         })
     }
 
-    //Get last 9 created post ordered by creation date in DESC order
+    //Get last 9 created post ordered by creation date in DESC order. Also, returns total post count
     const posts = await getUserPosts(userID)
-    //Get posts count 
-    const count = await getUserPostCount(userID)
 
     return res.json({
         profile: profile[0],
-        posts,
-        postCount: count[0].count
+        posts: posts.posts,
+        postCount: posts.postCount
     }).status(201);
 })
 

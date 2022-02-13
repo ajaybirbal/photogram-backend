@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
 /**
  * Deletes profile from the db
  */
-router.get('/:id/delete', async(req, res) => {
+router.delete('/:id/delete', async(req, res) => {
     const userID = req.params.id;
 
     //Json response generator

@@ -1,9 +1,11 @@
 /**
  * File to handle profile routes.
  * /profile/:id - Profile page
+ * /profile/:id/delete - For deleting a particular profile
+ * 
+ * ---To do---------
  * /profile/:id/follow - For following a particular profile
  * /profile/:id/unfollow - For unfollowing a particular profile
- * /profile/:id/deleting - For deleting a particular profile
  */
 
 const express = require('express');
@@ -33,9 +35,9 @@ router.get('/:id', async (req, res) => {
     const count = await getUserPostCount(userID)
 
     return res.json({
-        profile,
+        profile: profile[0],
         posts,
-        postCount: count
+        postCount: count[0].count
     }).status(201);
 })
 

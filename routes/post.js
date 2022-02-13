@@ -67,7 +67,8 @@ router.get('/:id', async (req, res) => {
 })
 
 /**
- * Returns array of posts sorted by limit and offset
+ * Returns array of posts sorted by created date in descending order.
+ * Limit and offset can be applied.
  * Format: /post/user/34?limit=10&offset=0
  */
 router.get('/user/:id', async (req, res) => {
@@ -80,7 +81,7 @@ router.get('/user/:id', async (req, res) => {
 })
 
 /**
- * Deletes the particular posts from the database
+ * Deletes the particular posts from the database.
  */
 router.delete('/:id', async (req, res) => {
     const postID = req.params.id;

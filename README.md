@@ -1,6 +1,6 @@
 # Backend for photogram
 
-Photogram is an instragram clone app. 
+Photogram is an instragram clone app. Created by Ajay Birbal for learning purposes.
 
 ## Signup routes
 

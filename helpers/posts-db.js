@@ -54,6 +54,7 @@ module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
                         .where('user_id', userId)
                         .limit(limit)
                         .offset(offset)
+                        .orderBy('created_at', 'desc');
 }
 
 /**

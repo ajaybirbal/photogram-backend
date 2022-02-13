@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
         })
     }
 
-    //Get first 9 posts of the user
+    //Get last 9 created post ordered by creation date in DESC order
     const posts = await getUserPosts(userID)
     //Get posts count 
     const count = await getUserPostCount(userID)

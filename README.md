@@ -2,7 +2,7 @@
 
 Photogram is an instragram clone app. 
 
-## Profile related routes
+## Profile routes
 
 ### `/profile/:id`
 GET - Gets a particuler profile. 
@@ -11,7 +11,7 @@ GET - Gets a particuler profile.
 DELETE - Deletes a particular profile.
 
 
-## Posts related routes
+## Posts routes
 Routes for handling posts in the app.
 
 ### `/post/:id`

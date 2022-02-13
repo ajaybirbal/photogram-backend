@@ -2,6 +2,21 @@
 
 Photogram is an instragram clone app. 
 
+## Signup routes
+
+### `/signup`
+POST - Registers a new user
+Requires following body content to be passed in JSON format: -
+`{
+    email: 'Email',
+    fname: 'First name',
+    lname: 'Last name',
+    password: 'Password',
+    desc: 'Description to be shown on bio page',
+    userhandle: 'Account handle'
+}`
+
+
 ## Profile routes
 
 ### `/profile/:id`
@@ -19,6 +34,11 @@ GET - Shows the individual post
 
 ### `/post/create`
 POST - Creates a new post
+Requires following body content to be passed in JSON format: -
+`{
+    user_id: 'User Id of the uploader',
+    body: 'Body content of the image',
+}`
 
 ### `/post/:id`
 DELETE - Deletes the particular post

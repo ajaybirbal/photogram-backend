@@ -24,10 +24,13 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 
 
+
 /**
  * Post page handler
  * new post submission and individual post page viewer
  */
+ const postRoute = require('./routes/post')
+ app.use('/post', postRoute)
 
 //Set port here
 const port = 3000

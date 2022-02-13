@@ -17,20 +17,18 @@ app.use('/signup', userSignupRoute);
  */
 app.get('/', (req, res) => res.send('Hello World!'))
 
-
 /**
  * profile page handler
  */
-
-
-
+const profileRoute = require('./routes/profile');
+app.use('/profile', profileRoute);
 
 /**
  * Post page handler
  * new post submission and individual post page viewer
  */
- const postRoute = require('./routes/post')
- app.use('/post', postRoute)
+const postRoute = require('./routes/post')
+app.use('/post', postRoute)
 
 //Set port here
 const port = 3000

@@ -1,5 +1,5 @@
 /**
- * File to handle posts related database functions.
+ * File to handle posts routes.
  */
 
 const express = require('express');

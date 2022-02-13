@@ -9,7 +9,7 @@ exports.up = function(knex) {
         table.text('body', 255).nullable()
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())
-        table.integer('user_id').references('id').inTable('users').notNullable();
+        table.integer('user_id').references('id').inTable('users').notNullable().onDelete('CASCADE');
     })
 };
 

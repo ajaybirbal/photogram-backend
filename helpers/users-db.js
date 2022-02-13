@@ -39,3 +39,36 @@ module.exports.createNewUser = async(fname, lname, email, password, userhandle, 
         errResult: errResult ? errResult : null
     }
 }
+
+/**
+ * Gets users info from the database.
+ * @param {*} userID 
+ * @returns 
+ */
+module.exports.getUserInfo = async userID => {
+    return await knex(USERS_DB_NAME)
+                    .select('id', 'fname', 'lname', 'userhandle', 'desc')
+                    .where('id', userID)
+}
+
+/**
+ * Deletes users from the database.
+ * @param {*} userId 
+ * @returns 
+ */
+module.exports.deleteUser = async userId => {
+    let result = null, errResult = null;
+
+    try{
+        result = await knex(USERS_DB_NAME)
+                    .where('id', Number(userId))
+                    .del();
+    } catch(error){
+        errResult = null;
+    }
+
+    return {
+        result,
+        error: errResult
+    }
+}

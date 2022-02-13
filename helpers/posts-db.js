@@ -43,7 +43,7 @@ module.exports.getSinglePost = async postID => {
 }
 
 /**
- * Returns posts by a particular user.
+ * Returns posts by a particular user. Ability offset and limit posts.
  * @param {*} userId 
  * @param {*} limit 
  * @param {*} offset 
@@ -56,7 +56,11 @@ module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
                         .offset(offset)
 }
 
-
+/**
+ * Deletes post from the posts table.
+ * @param {*} postID 
+ * @returns 
+ */
 module.exports.deletePost = async postID => {
     let result = null, errResult = null;
 
@@ -72,4 +76,15 @@ module.exports.deletePost = async postID => {
         result,
         error: errResult
     }
+}
+
+/**
+ * Returns total number of posts by the user
+ * @param {*} userId 
+ */
+module.exports.getUserPostCount = async userId => {
+    return await knex(POSTS_DB_NAME)
+                    .count()
+                    .groupBy('user_id')
+                    .having('user_id', '=',  userId);
 }

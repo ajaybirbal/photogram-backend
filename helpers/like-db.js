@@ -28,6 +28,29 @@ module.exports.likePost = async (postID, likerID) => {
     }
 }
 
+
+/**
+ * Dislikes a post.
+ * @param {*} postID 
+ * @param {*} likerID 
+ */
+module.exports.dislikePost = async (postID, likerID) => {
+    let result = null, errResult = null;
+
+    try{
+        result = await knex(LIKES_DB_NAME)
+                    .where({post_id: postID, user_id: likerID})
+                    .del();
+    } catch(error){
+        errResult = error;
+    }
+
+    return {
+        result: result,
+        error: errResult
+    }
+}
+
 /**
  * Counts the number of likes in a post.
  * @param {*} postID 

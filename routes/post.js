@@ -1,4 +1,6 @@
 /***
+ * File to handle posts routes.
+ * 
  * 
  * /post/create - Creates a new post
  * /post/:id - Get - Shows the individual post
@@ -11,14 +13,9 @@
  * /post/user/34?limit=10&offset=0 - Shows the post to be shown on profile page
  * 
  */
-
-/**
-* File to handle posts routes.
- */
-
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { likePost, getPostLikesCount } = require('../helpers/like-db');
+const { likePost, getPostLikesCount, dislikePost } = require('../helpers/like-db');
 const { createNewPost, getSinglePost, getUserPosts, deletePost } = require('../helpers/posts-db');
 const router = express.Router();
 
@@ -59,10 +56,10 @@ router.post('/create',
  */
 router.get('/:id', async (req, res) => {
     const postID = Number(req.params.id);
-    
+
     const result = await getSinglePost(postID);
     const numberOfLikes = await getPostLikesCount(postID);
-    
+
     return res.json({
         postData: result,
         likes: numberOfLikes[0].count
@@ -90,7 +87,7 @@ router.delete('/:id', async (req, res) => {
 
     //Json response generator
     const setDeletedStatus = status => {
-        return{
+        return {
             deleted: status
         }
     }
@@ -112,11 +109,14 @@ router.delete('/:id', async (req, res) => {
 })
 
 //------ Likes / Dislikes handler
+/**
+ * Route for liking a post
+ */
 router.get('/:id/like', async (req, res) => {
     const postID = req.params.id;
     //Json parameters
     const likerID = req.body.likerID;
-    const {result, error} = await likePost(postID, likerID);
+    const { result, error } = await likePost(postID, likerID);
 
     if (error != null || error != undefined) {
         return res.json({ liked: false }).status(401);
@@ -124,6 +124,39 @@ router.get('/:id/like', async (req, res) => {
 
     if (result != null) {
         return res.json({ liked: true }).status(401);
+    }
+})
+
+
+/**
+ * Route for disliking a post
+ */
+router.delete('/:id/dislike', async (req, res) => {
+    const postID = req.params.id;
+    //Json parameters
+    const likerID = req.body.likerID;
+
+    //JSON response
+    //Json response generator
+    const setDeletedStatus = status => {
+        return {
+            deleted: status
+        }
+    }
+
+    const { result, error } = await dislikePost(postID, likerID);
+
+    if (result && result === 1) {
+        return res.json(setDeletedStatus(true)).status(200)
+    }
+
+    //Item is already deleted
+    if (result != null && result != undefined && result === 0) {
+        return res.json(setDeletedStatus(false)).status(200)
+    }
+
+    if (error) {
+        return res.json(setDeletedStatus(false)).status(200)
     }
 })
 

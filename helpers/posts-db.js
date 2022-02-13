@@ -69,7 +69,7 @@ module.exports.deletePost = async postID => {
                     .where('id', Number(postID))
                     .del();
     } catch(error){
-        errResult = null;
+        errResult = error;
     }
 
     return {

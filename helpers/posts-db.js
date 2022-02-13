@@ -43,7 +43,7 @@ module.exports.getSinglePost = async postID => {
 }
 
 /**
- * Returns posts by a particular user. Ability offset and limit posts.
+ * Returns posts by a particular user. Ability to offset and limit number of posts.
  * @param {*} userId 
  * @param {*} limit 
  * @param {*} offset 

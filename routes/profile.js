@@ -1,11 +1,14 @@
 /**
  * File to handle profile routes.
+ * 
+ * Routes: -
  * /profile/:id - Profile page
  * /profile/:id/delete - For deleting a particular profile
  * 
  * ---To do---------
  * /profile/:id/follow - For following a particular profile
  * /profile/:id/unfollow - For unfollowing a particular profile
+ * 
  */
 
 const express = require('express');

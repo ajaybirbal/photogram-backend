@@ -14,3 +14,4 @@ module.exports.knex = require('knex')({
 //Names of the tables in the database
 module.exports.USERS_DB_NAME = 'users';
 module.exports.POSTS_DB_NAME = 'posts';
+module.exports.LIKES_DB_NAME = 'likes';

@@ -1,9 +1,24 @@
+/***
+ * 
+ * /post/create - Creates a new post
+ * /post/:id - Get - Shows the individual post
+ * /post/:id - Delete - Deletes the particular post
+ * 
+ * /post/:id/like - Likes a particular post
+ * /post/:id/dislike - Dislikes a particular post
+ * 
+ * -----Profile page functions
+ * /post/user/34?limit=10&offset=0 - Shows the post to be shown on profile page
+ * 
+ */
+
 /**
- * File to handle posts routes.
+* File to handle posts routes.
  */
 
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const { likePost, getPostLikesCount } = require('../helpers/like-db');
 const { createNewPost, getSinglePost, getUserPosts, deletePost } = require('../helpers/posts-db');
 const router = express.Router();
 
@@ -44,8 +59,14 @@ router.post('/create',
  */
 router.get('/:id', async (req, res) => {
     const postID = Number(req.params.id);
+    
     const result = await getSinglePost(postID);
-    return res.json(result).status(200);
+    const numberOfLikes = await getPostLikesCount(postID);
+    
+    return res.json({
+        postData: result,
+        likes: numberOfLikes[0].count
+    }).status(200);
 })
 
 /**
@@ -87,6 +108,22 @@ router.delete('/:id', async (req, res) => {
 
     if (error) {
         return res.json(setDeletedStatus(false)).status(200)
+    }
+})
+
+//------ Likes / Dislikes handler
+router.get('/:id/like', async (req, res) => {
+    const postID = req.params.id;
+    //Json parameters
+    const likerID = req.body.likerID;
+    const {result, error} = await likePost(postID, likerID);
+
+    if (error != null || error != undefined) {
+        return res.json({ liked: false }).status(401);
+    }
+
+    if (result != null) {
+        return res.json({ liked: true }).status(401);
     }
 })
 

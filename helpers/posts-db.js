@@ -2,7 +2,7 @@
  * Helper for handling db functions for posts
  */
 
-const { knex, POSTS_DB_NAME } = require("../db");
+const { knex, POSTS_DB_NAME, LIKES_DB_NAME } = require("../db");
 
 /**
  * Inserts new posts in the db.
@@ -100,4 +100,21 @@ module.exports.getUserPostCount = async userId => {
         .count()
         .groupBy('user_id')
         .having('user_id', '=', userId);
+}
+
+/**
+ * Whether post is liked by the user. Returns boolean
+ */
+module.exports.getPostLikedByParticularUser = async (postID, userID) => {
+    const result = await knex(LIKES_DB_NAME)
+                    .where({
+                        user_id: userID,
+                        post_id: postID
+                    });
+
+    if (result.length === 1) {
+        return true;
+    }
+
+    return false;
 }

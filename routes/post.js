@@ -17,7 +17,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { route } = require('express/lib/router');
 const { likePost, getPostLikesCount, dislikePost, getPostLikers } = require('../helpers/like-db');
-const { createNewPost, getSinglePost, getUserPosts, deletePost } = require('../helpers/posts-db');
+const { createNewPost, getSinglePost, getUserPosts, deletePost, getPostLikedByParticularUser } = require('../helpers/posts-db');
 const router = express.Router();
 
 /**
@@ -53,17 +53,21 @@ router.post('/create',
 )
 
 /**
- * Returns a single post from the database
+ * Returns a single post from the database.
+ * Also returns if the post is liked by the user.
  */
 router.get('/:id', async (req, res) => {
     const postID = Number(req.params.id);
+    const userID = req.body.user_id
 
     const result = await getSinglePost(postID);
     const numberOfLikes = await getPostLikesCount(postID);
+    const likedByUserID = await getPostLikedByParticularUser(postID, userID)
 
     return res.json({
         postData: result,
-        likes: numberOfLikes[0]?.count || 0
+        likes: numberOfLikes[0]?.count || 0,
+        likedByUser: likedByUserID
     }).status(200);
 })
 

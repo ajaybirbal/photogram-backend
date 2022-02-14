@@ -30,7 +30,11 @@ DELETE - Deletes a particular profile.
 Routes for handling posts in the app.
 
 ### `/post/:id`
-GET - Shows the individual post
+GET - Shows the individual post. Also returns if a particular post is liked by the user.
+Requires following body content to be passed in JSON format: -
+`{
+    user_id: 'User Id of the person viewing profile'
+}`
 
 ### `/post/create`
 POST - Creates a new post

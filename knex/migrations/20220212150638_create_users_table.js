@@ -9,7 +9,7 @@ exports.up = function(knex) {
     return knex.schema.createTable(USERS_DB_NAME, function(table) {
         table.increments().primary()
         table.string('fname', 40).notNullable()
-        table.string('lname', 40).notNullable()
+        table.string('lname', 40).nullable()
         table.string('email', 255).notNullable().unique()
         table.string('password', 100).notNullable()
         table.text('desc').nullable()

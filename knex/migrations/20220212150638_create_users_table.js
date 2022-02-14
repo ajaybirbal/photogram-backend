@@ -15,6 +15,7 @@ exports.up = function(knex) {
         table.text('desc').nullable()
         table.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now())
         table.string('userhandle', 40).notNullable().unique()
+        table.string('profilepicurl', 255).notNullable()
     })
 };
 

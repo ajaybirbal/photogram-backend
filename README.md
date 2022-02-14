@@ -75,20 +75,20 @@ Offset - Offset the number of posts from the begining. Default - 0
 
 This function is primarily used in displaying images on the profile page.
 
-## ENV variables
+# ENV variables
 
 Insert your own values.
 
-# Development variables
-DEVELOPMENT_DB_HOST=
+## Development variables
+`DEVELOPMENT_DB_HOST=
 DEVELOPMENT_DB_USER=
 DEVELOPMENT_DB_PASS=
 DEVELOPMENT_DBNAME=
-DEVELOPMENT_DB_PORT=
+DEVELOPMENT_DB_PORT=`
 
-# Production variables
-DB_HOST=
+## Production variables
+`DB_HOST=
 DB_USER=
 DB_PASS=
 DBNAME=
-DB_PORT=
+DB_PORT=`

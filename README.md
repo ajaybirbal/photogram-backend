@@ -80,15 +80,19 @@ This function is primarily used in displaying images on the profile page.
 Insert your own values.
 
 ## Development variables
-`DEVELOPMENT_DB_HOST=
+```
+DEVELOPMENT_DB_HOST=
 DEVELOPMENT_DB_USER=
 DEVELOPMENT_DB_PASS=
 DEVELOPMENT_DBNAME=
-DEVELOPMENT_DB_PORT=`
+DEVELOPMENT_DB_PORT=
+```
 
 ## Production variables
-`DB_HOST=
+```
+DB_HOST=
 DB_USER=
 DB_PASS=
 DBNAME=
-DB_PORT=`
+DB_PORT=
+```

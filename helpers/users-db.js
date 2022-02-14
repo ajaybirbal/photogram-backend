@@ -2,7 +2,8 @@
  * Contains functions for managing users in the database.
  */
 
-const { USERS_DB_NAME, knex } = require("../db")
+const { USERS_DB_NAME, knex } = require("../db");
+const { hashPassword } = require("../services/password-handler");
 
 /**
  * Adds  new user to the database. Returns result if user is created else returns the error.
@@ -16,7 +17,7 @@ const { USERS_DB_NAME, knex } = require("../db")
 module.exports.createNewUser = async(fname, lname, email, password, userhandle, desc = '') => {
 
     //hashed password function later
-    const hashed = password
+    const hashedPassword = await hashPassword(password);
 
     let result = null,
         errResult = null;
@@ -26,7 +27,7 @@ module.exports.createNewUser = async(fname, lname, email, password, userhandle, 
             fname,
             lname,
             email,
-            password: hashed,
+            password: hashedPassword,
             userhandle,
             desc
         })

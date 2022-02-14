@@ -9,7 +9,7 @@ exports.up = function(knex) {
         table.string('fname', 40).notNullable()
         table.string('lname', 40).notNullable()
         table.string('email', 255).notNullable().unique()
-        table.string('password', 50).notNullable()
+        table.string('password', 100).notNullable()
         table.text('desc').nullable()
         table.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now())
         table.string('userhandle', 40).notNullable().unique()

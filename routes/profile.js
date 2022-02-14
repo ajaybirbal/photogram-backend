@@ -4,15 +4,13 @@
  * Routes: -
  * /profile/:id - Profile page
  * /profile/:id/delete - For deleting a particular profile
- * 
- * ---To do---------
  * /profile/:id/follow - For following a particular profile
  * /profile/:id/unfollow - For unfollowing a particular profile
  * 
  */
 
 const express = require('express');
-const { getUserPosts, getUserPostCount } = require('../helpers/posts-db');
+const { getUserPosts } = require('../helpers/posts-db');
 const { getUserInfo, deleteUser } = require('../helpers/users-db');
 const router = express.Router();
 
@@ -68,6 +66,16 @@ router.delete('/:id/delete', async(req, res) => {
     if (error) {
         return res.json(setDeletedStatus(false)).status(200)
     }
+})
+
+/**
+ * Route to add a followerID to a leaderID
+ */
+router.get('/:id/follow', async(req, res) => {
+    const leaderID = req.params.id;
+    const followerID = req.body.followerID;
+
+    const result = await addNewFollower(leaderID, followerID);
 })
 
 module.exports = router;

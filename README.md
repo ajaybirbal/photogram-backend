@@ -1,8 +1,7 @@
 # Backend for photogram
 
-Photogram is an instragram clone app. Created by Ajay Birbal for learning purposes.
-
-This app uses nodejs, express and knexjs. Database used is postgresql.
+Photogram is an instragram clone app. This is REST API backend for instagram clone app.
+This app uses nodejs, express, express-validator and knexjs. Database used is postgresql.
 
 ## Signup routes
 
@@ -83,24 +82,25 @@ Offset - Offset the number of posts from the begining. Default - 0
 
 This function is primarily used in displaying images on the profile page.
 
-# ENV variables
+## ENV variables
 
 Insert your own values.
 
-## Development variables
 ```
+# DEVELOPMENT VARIABLE
 DEVELOPMENT_DB_HOST=
 DEVELOPMENT_DB_USER=
 DEVELOPMENT_DB_PASS=
 DEVELOPMENT_DBNAME=
 DEVELOPMENT_DB_PORT=
-```
 
-## Production variables
-```
+# Production variables
 DB_HOST=
 DB_USER=
 DB_PASS=
 DBNAME=
 DB_PORT=
+
+# Password generation
+SALT_ROUNDS = 10
 ```

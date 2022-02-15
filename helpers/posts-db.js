@@ -50,22 +50,12 @@ module.exports.getSinglePost = async postID => {
  * @param {*} offset 
  */
 module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
-
-    const getTotalPostsCountQuery = knex(POSTS_DB_NAME).select().count('*').where('user_id', '=', 25).as('total_post_count');
-
-    const result = await knex.select('id', 'url', 'body', 'created_at', 'user_id', getTotalPostsCountQuery)
+    return await knex.select('id', 'url', 'body', 'created_at', 'user_id')
         .from(POSTS_DB_NAME)
         .where('user_id', userId)
         .limit(limit)
         .offset(offset)
         .orderBy('created_at', 'desc');
-    
-    const postCount = result[0]?.total_post_count || 0;
-
-    return {
-        posts: result,
-        postCount
-    }
 }
 
 /**

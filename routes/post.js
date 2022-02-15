@@ -16,7 +16,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { likePost, getPostLikesCount, dislikePost, getPostLikers } = require('../helpers/like-db');
-const { createNewPost, getSinglePost, getUserPosts, deletePost, getPostLikedByParticularUser } = require('../helpers/posts-db');
+const { createNewPost, getSinglePost, getUserPosts, deletePost, getPostLikedByParticularUser, getUserPostCount } = require('../helpers/posts-db');
 const router = express.Router();
 
 /**
@@ -81,7 +81,12 @@ router.get('/user/:id', async (req, res) => {
     const offset = req.query.offset || 0;
 
     const result = await getUserPosts(userID, limit, offset);
-    return res.json(result).status(200);
+    const postCount = await getUserPostCount(userID);
+
+    return res.json({
+        posts: result,
+        postCount: postCount[0].count
+    }).status(200);
 })
 
 /**

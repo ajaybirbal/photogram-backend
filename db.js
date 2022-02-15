@@ -1,3 +1,7 @@
+/**
+ * File for handling db connections
+ */
+
 require('dotenv').config()
 
 module.exports.knex = require('knex')({

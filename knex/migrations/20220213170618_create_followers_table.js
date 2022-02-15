@@ -10,7 +10,7 @@ exports.up = function(knex) {
         table.integer('leader_id').references('id').inTable('users').notNullable().onDelete('CASCADE')
         table.integer('follower_id').references('id').inTable('users').notNullable().onDelete('CASCADE')
         table.unique(['leader_id', 'follower_id'])
-        table.check('?? >= ??', ['leader_id', 'follower_id']);
+        table.check('?? <> ??', ['leader_id', 'follower_id']);
     })
 };
 

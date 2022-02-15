@@ -60,7 +60,7 @@ module.exports.getUserPosts = async (userId, limit = 9, offset = 0) => {
         .offset(offset)
         .orderBy('created_at', 'desc');
     
-    const postCount = result[0].total_post_count;
+    const postCount = result[0]?.total_post_count || 0;
 
     return {
         posts: result,

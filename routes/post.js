@@ -15,7 +15,6 @@
  */
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { route } = require('express/lib/router');
 const { likePost, getPostLikesCount, dislikePost, getPostLikers } = require('../helpers/like-db');
 const { createNewPost, getSinglePost, getUserPosts, deletePost, getPostLikedByParticularUser } = require('../helpers/posts-db');
 const router = express.Router();
@@ -118,7 +117,7 @@ router.delete('/:id', async (req, res) => {
 /**
  * Route for liking a post
  */
-router.get('/:id/like', async (req, res) => {
+router.post('/:id/like', async (req, res) => {
     const postID = req.params.id;
     //Json parameters
     const likerID = req.body.likerID;
@@ -137,7 +136,7 @@ router.get('/:id/like', async (req, res) => {
 /**
  * Route for disliking a post
  */
-router.delete('/:id/dislike', async (req, res) => {
+router.post('/:id/dislike', async (req, res) => {
     const postID = req.params.id;
     //Json parameters
     const likerID = req.body.likerID;
@@ -175,8 +174,7 @@ router.get('/:id/likers', async(req, res) => {
     const limit = req.query.limit || 9;
     const offset = req.query.offset || 0;
 
-    const result = await getPostLikers(postID, limit, offset);
-    
+    const result = await getPostLikers(postID, limit, offset);    
     return res.json(result).status(200);
 })
 

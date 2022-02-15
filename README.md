@@ -23,11 +23,39 @@ Requires following body content to be passed in JSON format: -
 ## Profile routes
 
 ### `/profile/:id`
-GET - Gets a particuler profile. 
+GET - Gets a particuler profile. Also returns if the particular profile is being followed.
+Requires following body content to be passed in JSON format: -
+```
+{
+    user_id: 'User ID of the profile viewer'
+}
+```
 
 ### `/profile/:id/delete`
 DELETE - Deletes a particular profile.
 
+### `/profile/:id/follow`
+POST - Follows a particular profile. :id is the profile to be liked or leader ID.
+Requires following body content to be passed in JSON format: -
+```
+{
+    user_id: 'ID of the follower'
+}
+```
+
+### `/profile/:id/unfollow`
+POST - Unfollows a particular profile. :id is the profile to be liked or leader ID.
+Requires following body content to be passed in JSON format: -
+```
+{
+    user_id: 'ID of the follower'
+}
+```
+
+### `/profile/:id/followers?limit=12&offset=0`
+GET - Returns a list of user handles that are following a particular profile.
+Limit - Number of likers to be shown, Default - 12
+Offset - Offset the number of likers from the begining. Default - 0
 
 ## Posts routes
 Routes for handling posts in the app.
@@ -37,7 +65,7 @@ GET - Shows the individual post. Also returns if a particular post is liked by t
 Requires following body content to be passed in JSON format: -
 ```
 {
-    user_id: 'User Id of the person viewing profile'
+    user_id: 'User Id of the person viewing post'
 }
 ```
 
@@ -55,7 +83,7 @@ Requires following body content to be passed in JSON format: -
 DELETE - Deletes the particular post
 
 ### `/post/:id/like`
-GET - Likes a particular post
+POST - Likes a particular post
 Requires following body content to be passed in JSON format: -
 `{
     likerID: 'ID of the liker'
@@ -67,7 +95,7 @@ Limit - Number of likers to be shown, Default - 12
 Offset - Offset the number of likers from the begining. Default - 0
 
 ### `/post/:id/dislike`
-DELETE - Removes the like from the particular post
+POST - Removes the like from the particular post
 Requires following body content to be passed in JSON format: -
 ```
 {
@@ -102,5 +130,6 @@ DBNAME=
 DB_PORT=
 
 # Password generation
+#Default salt rounds. Change  if needed.
 SALT_ROUNDS = 10
 ```
